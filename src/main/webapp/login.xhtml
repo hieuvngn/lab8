@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Đăng nhập</ui:define>
+    
+    <ui:define name="content">
+        <h1>Đăng nhập</h1>
+        
+        <p:messages showDetail="true" closable="true"/>
+        
+        <h:form id="loginForm" styleClass="login-form">
+            <div class="form-group">
+                <h:outputLabel for="username" value="Tên đăng nhập:"/>
+                <h:inputText id="username" value="#{loginBean.username}" 
+                             required="true"
+                             requiredMessage="Tên đăng nhập không được để trống"/>
+                <h:message for="username" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="password" value="Mật khẩu:"/>
+                <h:inputSecret id="password" value="#{loginBean.password}" 
+                               required="true"
+                               requiredMessage="Mật khẩu không được để trống"/>
+                <h:message for="password" styleClass="error-message"/>
+            </div>
+            
+            <div class="button-group">
+                <h:commandButton value="Đăng nhập" action="#{loginBean.login}" 
+                                 styleClass="btn btn-primary"/>
+                <h:commandButton value="Hủy" action="/index.xhtml?faces-redirect=true" 
+                                 immediate="true"
+                                 styleClass="btn btn-secondary"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+</html>
