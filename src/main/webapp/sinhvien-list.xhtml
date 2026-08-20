@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Danh sách Sinh viên - JSF</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>Danh sách Sinh viên</h1>
+        
+        <p:messages showDetail="true" closable="true"/>
+        
+        <!-- Search Form -->
+        <h:form id="searchForm" styleClass="search-form">
+            <div class="search-box">
+                <h:inputText value="#{sinhVienBean.searchKeyword}" 
+                             placeholder="Nhập từ khóa tìm kiếm..."/>
+                <h:commandButton value="Tìm kiếm" action="#{sinhVienBean.search}" 
+                                 styleClass="btn btn-primary"/>
+                <h:link value="Thêm mới" outcome="/sinhvien-form.xhtml" 
+                        styleClass="btn btn-success"/>
+            </div>
+        </h:form>
+        
+        <!-- Student List Table -->
+        <h:form id="listForm">
+            <h:dataTable value="#{sinhVienBean.danhSachSinhVien}" var="sv" 
+                         styleClass="student-table"
+                         headerClass="table-header"
+                         rowClasses="table-row">
+                
+                <h:column>
+                    <f:facet name="header">STT</f:facet>
+                    #{status.index + 1}
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Mã SV</f:facet>
+                    <h:outputText value="#{sv.maSV}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Họ và tên</f:facet>
+                    <h:outputText value="#{sv.hoTen}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Email</f:facet>
+                    <h:outputText value="#{sv.email}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Điện thoại</f:facet>
+                    <h:outputText value="#{sv.dienThoai}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Lớp</f:facet>
+                    <h:outputText value="#{sv.lop}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Địa chỉ</f:facet>
+                    <h:outputText value="#{sv.diaChi}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Giới tính</f:facet>
+                    <h:outputText value="#{sv.gioiTinh ? 'Nam' : 'Nữ'}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Thao tác</f:facet>
+                    <div class="action-buttons">
+                        <h:commandLink value="Sửa" action="#{sinhVienBean.editSinhVien(sv.maSV)}" 
+                                       styleClass="btn btn-sm btn-warning"/>
+                        <h:commandLink value="Xóa" action="#{sinhVienBean.deleteSinhVien(sv.maSV)}" 
+                                       styleClass="btn btn-sm btn-danger"
+                                       onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')"/>
+                    </div>
+                </h:column>
+            </h:dataTable>
+            
+            <div class="empty-message" rendered="#{empty sinhVienBean.danhSachSinhVien}">
+                Không có sinh viên nào trong danh sách.
+            </div>
+        </h:form>
+        
+        <div class="navigation">
+            <h:link value="Quay lại trang chủ" outcome="/index.xhtml" 
+                    styleClass="btn btn-link"/>
+        </div>
+    </div>
+</h:body>
+</html>

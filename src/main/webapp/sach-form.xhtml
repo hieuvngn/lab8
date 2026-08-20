@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Quản lý Sách - Form</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>Thêm/Sửa Sách</h1>
+        
+        <p:messages showDetail="true" closable="true"/>
+        
+        <h:form id="bookForm">
+            <div class="form-group">
+                <h:outputLabel for="maSach" value="Mã sách:"/>
+                <h:inputText id="maSach" value="#{sachBean.sach.maSach}" 
+                             required="true" 
+                             requiredMessage="Mã sách không được để trống">
+                    <f:validateLength minimum="3" maximum="10"/>
+                </h:inputText>
+                <h:message for="maSach" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="tenSach" value="Tên sách:"/>
+                <h:inputText id="tenSach" value="#{sachBean.sach.tenSach}" 
+                             required="true"
+                             requiredMessage="Tên sách không được để trống">
+                    <f:validateLength minimum="2" maximum="200"/>
+                </h:inputText>
+                <h:message for="tenSach" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="tacGia" value="Tác giả:"/>
+                <h:inputText id="tacGia" value="#{sachBean.sach.tacGia}" 
+                             required="true"
+                             requiredMessage="Tác giả không được để trống"/>
+                <h:message for="tacGia" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="nhaXuatBan" value="Nhà xuất bản:"/>
+                <h:inputText id="nhaXuatBan" value="#{sachBean.sach.nhaXuatBan}"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="namXuatBan" value="Năm xuất bản:"/>
+                <h:inputText id="namXuatBan" value="#{sachBean.sach.namXuatBan}">
+                    <f:validateLongRange minimum="1900" maximum="2100" 
+                                         validatorMessage="Năm xuất bản phải từ 1900 đến 2100"/>
+                </h:inputText>
+                <h:message for="namXuatBan" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="gia" value="Giá:"/>
+                <h:inputText id="gia" value="#{sachBean.sach.gia}">
+                    <f:validateDoubleRange minimum="0" 
+                                           validatorMessage="Giá phải lớn hơn hoặc bằng 0"/>
+                </h:inputText>
+                <h:message for="gia" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="soLuong" value="Số lượng:"/>
+                <h:inputText id="soLuong" value="#{sachBean.sach.soLuong}">
+                    <f:validateLongRange minimum="0" 
+                                         validatorMessage="Số lượng phải lớn hơn hoặc bằng 0"/>
+                </h:inputText>
+                <h:message for="soLuong" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel for="theLoai" value="Thể loại:"/>
+                <h:selectOneMenu id="theLoai" value="#{sachBean.sach.theLoai}">
+                    <f:selectItem itemLabel="-- Chọn thể loại --" itemValue=""/>
+                    <f:selectItem itemLabel="Công nghệ thông tin" itemValue="Công nghệ thông tin"/>
+                    <f:selectItem itemLabel="Văn học" itemValue="Văn học"/>
+                    <f:selectItem itemLabel="Khoa học" itemValue="Khoa học"/>
+                    <f:selectItem itemLabel="Kinh tế" itemValue="Kinh tế"/>
+                    <f:selectItem itemLabel="Nghệ thuật" itemValue="Nghệ thuật"/>
+                    <f:selectItem itemLabel="Giáo dục" itemValue="Giáo dục"/>
+                </h:selectOneMenu>
+            </div>
+            
+            <div class="button-group">
+                <h:commandButton value="Lưu" action="#{sachBean.addSach}" 
+                                 styleClass="btn btn-primary"/>
+                <h:commandButton value="Hủy" action="/sach-list.xhtml?faces-redirect=true" 
+                                 immediate="true"
+                                 styleClass="btn btn-secondary"/>
+            </div>
+        </h:form>
+        
+        <div class="navigation">
+            <h:link value="Xem danh sách sách" outcome="/sach-list.xhtml" 
+                    styleClass="btn btn-link"/>
+        </div>
+    </div>
+</h:body>
+</html>

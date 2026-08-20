@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Quản lý Sách - JSF</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>Quản lý Sách</h1>
+        
+        <p:messages showDetail="true" closable="true"/>
+        
+        <!-- Search and Filter Form -->
+        <h:form id="searchForm" styleClass="search-form">
+            <div class="search-box">
+                <h:inputText value="#{sachBean.searchKeyword}" 
+                             placeholder="Nhập từ khóa tìm kiếm..."/>
+                <h:commandButton value="Tìm kiếm" action="#{sachBean.search}" 
+                                 styleClass="btn btn-primary"/>
+                
+                <h:selectOneMenu value="#{sachBean.selectedTheLoai}">
+                    <f:selectItem itemLabel="-- Chọn thể loại --" itemValue=""/>
+                    <f:selectItem itemLabel="Công nghệ thông tin" itemValue="Công nghệ thông tin"/>
+                    <f:selectItem itemLabel="Văn học" itemValue="Văn học"/>
+                    <f:selectItem itemLabel="Khoa học" itemValue="Khoa học"/>
+                    <f:selectItem itemLabel="Kinh tế" itemValue="Kinh tế"/>
+                </h:selectOneMenu>
+                <h:commandButton value="Lọc" action="#{sachBean.filterByTheLoai}" 
+                                 styleClass="btn btn-warning"/>
+                
+                <h:link value="Thêm mới" outcome="/sach-form.xhtml" 
+                        styleClass="btn btn-success"/>
+            </div>
+        </h:form>
+        
+        <!-- Book List Table -->
+        <h:form id="listForm">
+            <h:dataTable value="#{sachBean.danhSachSach}" var="s" 
+                         styleClass="student-table"
+                         headerClass="table-header"
+                         rowClasses="table-row">
+                
+                <h:column>
+                    <f:facet name="header">STT</f:facet>
+                    #{status.index + 1}
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Mã sách</f:facet>
+                    <h:outputText value="#{s.maSach}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Tên sách</f:facet>
+                    <h:outputText value="#{s.tenSach}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Tác giả</f:facet>
+                    <h:outputText value="#{s.tacGia}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">NXB</f:facet>
+                    <h:outputText value="#{s.nhaXuatBan}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Năm XB</f:facet>
+                    <h:outputText value="#{s.namXuatBan}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Giá</f:facet>
+                    <h:outputText value="#{s.gia}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                    </h:outputText>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Số lượng</f:facet>
+                    <h:outputText value="#{s.soLuong}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Thể loại</f:facet>
+                    <h:outputText value="#{s.theLoai}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Thao tác</f:facet>
+                    <div class="action-buttons">
+                        <h:commandLink value="Sửa" action="#{sachBean.editSach(s.maSach)}" 
+                                       styleClass="btn btn-sm btn-warning"/>
+                        <h:commandLink value="Xóa" action="#{sachBean.deleteSach(s.maSach)}" 
+                                       styleClass="btn btn-sm btn-danger"
+                                       onclick="return confirm('Bạn có chắc muốn xóa sách này?')"/>
+                    </div>
+                </h:column>
+            </h:dataTable>
+            
+            <div class="empty-message" rendered="#{empty sachBean.danhSachSach}">
+                Không có sách nào trong danh sách.
+            </div>
+        </h:form>
+        
+        <div class="navigation">
+            <h:link value="Quay lại trang chủ" outcome="/index.xhtml" 
+                    styleClass="btn btn-link"/>
+        </div>
+    </div>
+</h:body>
+</html>
